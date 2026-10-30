@@ -8,6 +8,10 @@ dist/
 dist-ssr/
 */dist-ssr/
 
+# Explicitly track frontend build dist in Exp9
+!Exp9/dist/
+!Exp9/dist/**
+
 # Logs
 logs/
 *.log
