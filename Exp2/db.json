@@ -1,0 +1,60 @@
+{
+  "students": [
+    {
+      "id": "S101",
+      "name": "Aarav Sharma",
+      "semester": 5,
+      "department": "Computer Science & Engineering",
+      "email": "aarav.sharma@example.com",
+      "attendance": 88,
+      "status": "On Track",
+      "subjects": [
+        "Data Structures & Algorithms",
+        "Database Management Systems",
+        "Web Development Technologies"
+      ]
+    },
+    {
+      "id": "S102",
+      "name": "Priya Patel",
+      "semester": 4,
+      "department": "Information Technology",
+      "email": "priya.patel@example.com",
+      "attendance": 64,
+      "status": "At Risk",
+      "subjects": [
+        "Operating Systems",
+        "Computer Networks",
+        "Software Engineering"
+      ]
+    },
+    {
+      "id": "S103",
+      "name": "Rohan Mehta",
+      "semester": 6,
+      "department": "Computer Science & Engineering",
+      "email": "rohan.mehta@example.com",
+      "attendance": 94,
+      "status": "Excellent",
+      "subjects": [
+        "Machine Learning",
+        "Cloud Computing",
+        "Cyber Security"
+      ]
+    },
+    {
+      "id": "S104",
+      "name": "Ananya Verma",
+      "semester": 3,
+      "department": "Electronics & Communication",
+      "email": "ananya.verma@example.com",
+      "attendance": 76,
+      "status": "Needs Attention",
+      "subjects": [
+        "Digital Electronics",
+        "Signals & Systems",
+        "Microcontrollers"
+      ]
+    }
+  ]
+}

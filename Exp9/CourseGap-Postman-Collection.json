@@ -1,0 +1,143 @@
+{
+  "info": {
+    "_postman_id": "coursegap-companion-pro-collection",
+    "name": "CourseGap Companion Pro API (Exp9)",
+    "description": "Comprehensive Postman Collection testing the Student Academic Progress and Support API (JSON Server) for CourseGap Companion Pro. Covers GET, POST, PUT, PATCH, and DELETE requests for both students and supportRequests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET All Students",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:3000/students",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["students"]
+        },
+        "description": "Retrieves all student academic records with attendance, marks, and subject arrays."
+      },
+      "response": []
+    },
+    {
+      "name": "2. GET Student By ID",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:3000/students/STU101",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["students", "STU101"]
+        },
+        "description": "Retrieves specific student record by ID."
+      },
+      "response": []
+    },
+    {
+      "name": "3. POST Create Student",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": \"STU108\",\n  \"name\": \"Meera Nair\",\n  \"email\": \"meera.nair@example.edu\",\n  \"semester\": 3,\n  \"course\": \"Computer Science & Engineering\",\n  \"status\": \"On Track\",\n  \"attendance\": 88,\n  \"marks\": 82,\n  \"gaps\": 0,\n  \"notes\": \"Strong fundamentals in discrete mathematics.\",\n  \"subjects\": [\n    { \"code\": \"CS301\", \"name\": \"Data Structures\", \"marks\": 85, \"attendance\": 90, \"gap\": false }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/students",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["students"]
+        },
+        "description": "Creates a new student record."
+      },
+      "response": []
+    },
+    {
+      "name": "4. PUT Update Student Record",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": \"STU101\",\n  \"name\": \"Aarav Sharma\",\n  \"email\": \"aarav.sharma@example.edu\",\n  \"semester\": 4,\n  \"course\": \"Computer Science & Engineering\",\n  \"status\": \"On Track\",\n  \"attendance\": 95,\n  \"marks\": 90,\n  \"gaps\": 0,\n  \"notes\": \"Updated capstone project milestone achieved.\",\n  \"subjects\": [\n    { \"code\": \"CS401\", \"name\": \"Data Structures & Algorithms\", \"marks\": 92, \"attendance\": 96, \"gap\": false }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/students/STU101",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["students", "STU101"]
+        },
+        "description": "Replaces student record with updated grades."
+      },
+      "response": []
+    },
+    {
+      "name": "5. PATCH Quick Update Student Status & Attendance",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"attendance\": 75,\n  \"status\": \"Needs Attention\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/students/STU102",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["students", "STU102"]
+        },
+        "description": "Partially updates status or attendance for a student."
+      },
+      "response": []
+    },
+    {
+      "name": "6. DELETE Student Record",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:3000/students/STU108",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["students", "STU108"]
+        },
+        "description": "Permanently deletes a student record."
+      },
+      "response": []
+    },
+    {
+      "name": "7. GET Support Requests",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:3000/supportRequests",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["supportRequests"]
+        },
+        "description": "Fetches all academic mentoring and intervention requests."
+      },
+      "response": []
+    }
+  ]
+}

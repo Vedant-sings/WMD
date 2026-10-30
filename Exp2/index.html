@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CourseGap Companion - REST API Practice Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <div class="container header-container">
+      <div class="brand">
+        <span class="logo-icon" aria-hidden="true">🎓</span>
+        <div>
+          <h1>CourseGap Companion</h1>
+          <p class="tagline">REST API Practice & Postman Integration Hub</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-tech">JSON Server</span>
+        <span class="badge badge-tech">Postman v2.1</span>
+        <span class="badge badge-tech">Vanilla JS</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Quick Overview & How to Run -->
+    <section class="card how-to-run" aria-labelledby="run-heading">
+      <h2 id="run-heading" class="section-title">
+        <span class="title-icon">🚀</span> How to Setup & Run
+      </h2>
+      <div class="grid grid-2">
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">1</span>
+            <h3>Start JSON Server</h3>
+          </div>
+          <p>Launch the mock REST server targeting <code>db.json</code> on port 3000:</p>
+          <div class="code-block">
+            <code>npx json-server --watch db.json --port 3000</code>
+          </div>
+          <p class="help-text">Base URL: <code>http://localhost:3000/students</code></p>
+        </div>
+
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">2</span>
+            <h3>Import Postman Collection</h3>
+          </div>
+          <p>Import the pre-configured collection file into Postman:</p>
+          <div class="file-tag">
+            📄 <code>CourseGap-Postman-Collection.json</code>
+          </div>
+          <p class="help-text">Includes pre-configured requests, bodies, and test documentation.</p>
+        </div>
+      </div>
+
+      <div class="workflow-alert" role="region" aria-label="Testing Sequence Notice">
+        <strong>📌 Recommended Postman Testing Sequence:</strong>
+        <ol class="workflow-steps">
+          <li><span class="badge badge-get">GET</span> All Students</li>
+          <li><span class="badge badge-post">POST</span> Create Test Student (S105)</li>
+          <li><span class="badge badge-get">GET</span> Single Student (S105)</li>
+          <li><span class="badge badge-put">PUT</span> Full Replace (S105)</li>
+          <li><span class="badge badge-patch">PATCH</span> Partial Update (S102)</li>
+          <li><span class="badge badge-head">HEAD</span> Inspect Headers</li>
+          <li><span class="badge badge-delete">DELETE</span> Delete Test Student (S105)</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Student Data Table -->
+    <section class="card" aria-labelledby="table-heading">
+      <div class="table-card-header">
+        <div>
+          <h2 id="table-heading" class="section-title">
+            <span class="title-icon">👥</span> Initial Student Database (db.json)
+          </h2>
+          <p class="section-sub">Live student records available via the <code>/students</code> endpoint.</p>
+        </div>
+        <button id="refresh-table-btn" class="btn btn-outline" onclick="fetchLiveStudents()">
+          🔄 Refresh Table Data
+        </button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="students-table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Department</th>
+              <th scope="col">Semester</th>
+              <th scope="col">Email</th>
+              <th scope="col">Attendance</th>
+              <th scope="col">Status</th>
+              <th scope="col">Enrolled Subjects</th>
+            </tr>
+          </thead>
+          <tbody id="students-tbody">
+            <!-- Rendered initial data or fetched live data -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Endpoint Reference Cards -->
+    <section class="endpoints-section" aria-labelledby="endpoints-heading">
+      <h2 id="endpoints-heading" class="section-title">
+        <span class="title-icon">📚</span> REST API Endpoint Specifications
+      </h2>
+      <p class="section-sub">Reference guide for testing CRUD operations against <code>http://localhost:3000/students</code></p>
+
+      <div class="grid grid-cards">
+        <!-- 1. GET ALL -->
+        <article class="card endpoint-card">
+          <div class="card-top">
+            <span class="badge badge-get">GET</span>
+            <code class="endpoint-path">/students</code>
+          </div>
+          <h3>1. Retrieve All Students</h3>
+          <p>Fetches the full collection of student records from the database.</p>
+          <div class="meta-row">
+            <span class="meta-label">Expected Status:</span>
+            <span class="status-code code-200">200 OK</span>
+          </div>
+          <div class="code-preview">
+            <span class="preview-label">Sample Response (Array):</span>
+            <pre><code>[
+  { "id": "S101", "name": "Aarav Sharma", "semester": 5, ... },
+  { "id": "S102", "name": "Priya Patel", "semester": 4, ... }
+]</code></pre>
+          </div>
+        </article>
+
+        <!-- 2. GET BY ID -->
+        <article class="card endpoint-card">
+          <div class="card-top">
+            <span class="badge badge-get">GET</span>
+            <code class="endpoint-path">/students/:id</code>
+          </div>
+          <h3>2. Retrieve Single Student</h3>
+          <p>Fetches a specific student record by unique identifier (e.g. <code>S101</code>).</p>
+          <div class="meta-row">
+            <span class="meta-label">Expected Status:</span>
+            <span class="status-code code-200">200 OK</span>
+          </div>
+          <div class="code-preview">
+            <span class="preview-label">Sample Response (Object):</span>
+            <pre><code>{
+  "id": "S101",
+  "name": "Aarav Sharma",
+  "semester": 5,
+  "department": "Computer Science & Engineering",
+  "email": "aarav.sharma@example.com",
+  "attendance": 88,
+  "status": "On Track",
+  "subjects": ["Data Structures", "DBMS", "Web Tech"]
+}</code></pre>
+          </div>
+        </article>
+
+        <!-- 3. POST NEW -->
+        <article class="card endpoint-card">
+          <div class="card-top">
+            <span class="badge badge-post">POST</span>
+            <code class="endpoint-path">/students</code>
+          </div>
+          <h3>3. Add New Student</h3>
+          <p>Creates a new student entity. Requires complete JSON payload in request body.</p>
+          <div class="meta-row">
+            <span class="meta-label">Expected Status:</span>
+            <span class="status-code code-201">201 Created</span>
+          </div>
+          <div class="code-preview">
+            <span class="preview-label">Sample Request Body:</span>
+            <pre><code>{
+  "id": "S105",
+  "name": "Vikramaditya Rao",
+  "semester": 5,
+  "department": "Computer Science & Engineering",
+  "email": "vikram.rao@example.com",
+  "attendance": 91,
+  "status": "On Track",
+  "subjects": ["AI", "Web Tech", "Cloud"]
+}</code></pre>
+          </div>
+        </article>
+
+        <!-- 4. PUT REPLACE -->
+        <article class="card endpoint-card">
+          <div class="card-top">
+            <span class="badge badge-put">PUT</span>
+            <code class="endpoint-path">/students/:id</code>
+          </div>
+          <h3>4. Full Replace Student</h3>
+          <p>Completely replaces an existing student entity (e.g. <code>S105</code>).</p>
+          <div class="meta-row">
+            <span class="meta-label">Expected Status:</span>
+            <span class="status-code code-200">200 OK</span>
+          </div>
+          <div class="note-box">
+            <strong>⚠️ Note:</strong> <code>PUT</code> performs a full overwrite. Omitted fields will be permanently removed.
+          </div>
+          <div class="code-preview">
+            <span class="preview-label">Sample Request Body:</span>
+            <pre><code>{
+  "id": "S105",
+  "name": "Vikramaditya Rao",
+  "semester": 6,
+  "department": "Computer Science & Engineering",
+  "email": "vikram.rao.updated@example.com",
+  "attendance": 95,
+  "status": "Excellent",
+  "subjects": ["AI", "Web Tech", "Cloud", "Deep Learning"]
+}</code></pre>
+          </div>
+        </article>
+
+        <!-- 5. PATCH UPDATE -->
+        <article class="card endpoint-card">
+          <div class="card-top">
+            <span class="badge badge-patch">PATCH</span>
+            <code class="endpoint-path">/students/:id</code>
+          </div>
+          <h3>5. Partial Update Student</h3>
+          <p>Updates only specific fields (e.g. attendance or status of <code>S102</code>).</p>
+          <div class="meta-row">
+            <span class="meta-label">Expected Status:</span>
+            <span class="status-code code-200">200 OK</span>
+          </div>
+          <div class="note-box note-info">
+            <strong>💡 Note:</strong> <code>PATCH</code> applies delta updates, modifying only provided properties while preserving unchanged fields.
+          </div>
+          <div class="code-preview">
+            <span class="preview-label">Sample Request Body:</span>
+            <pre><code>{
+  "attendance": 78,
+  "status": "On Track"
+}</code></pre>
+          </div>
+        </article>
+
+        <!-- 6. DELETE TEST -->
+        <article class="card endpoint-card">
+          <div class="card-top">
+            <span class="badge badge-delete">DELETE</span>
+            <code class="endpoint-path">/students/:id</code>
+          </div>
+          <h3>6. Delete Test Student</h3>
+          <p>Removes a test student record from the database (e.g. <code>S105</code>).</p>
+          <div class="meta-row">
+            <span class="meta-label">Expected Status:</span>
+            <span class="status-code code-200">200 OK / 204</span>
+          </div>
+          <div class="note-box note-warning">
+            <strong>⚠️ Best Practice:</strong> Create a new test student (using POST) before executing DELETE to preserve base dataset.
+          </div>
+          <div class="code-preview">
+            <span class="preview-label">Target URL:</span>
+            <pre><code>DELETE http://localhost:3000/students/S105</code></pre>
+          </div>
+        </article>
+
+        <!-- 7. HEAD HEADERS -->
+        <article class="card endpoint-card">
+          <div class="card-top">
+            <span class="badge badge-head">HEAD</span>
+            <code class="endpoint-path">/students</code>
+          </div>
+          <h3>7. Inspect Response Headers</h3>
+          <p>Retrieves HTTP response headers without returning a response payload body.</p>
+          <div class="meta-row">
+            <span class="meta-label">Expected Status:</span>
+            <span class="status-code code-200">200 OK</span>
+          </div>
+          <div class="code-preview">
+            <span class="preview-label">Observed Response Headers:</span>
+            <pre><code>Content-Type: application/json; charset=utf-8
+Content-Length: 1248
+Cache-Control: no-cache
+Access-Control-Allow-Credentials: true
+(Body: 0 bytes empty)</code></pre>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Interactive Live Sandbox -->
+    <section class="card sandbox-card" aria-labelledby="sandbox-heading">
+      <h2 id="sandbox-heading" class="section-title">
+        <span class="title-icon">⚡</span> Interactive API Testing Console
+      </h2>
+      <p class="section-sub">Test live API requests directly against your running local JSON Server.</p>
+
+      <div class="sandbox-controls">
+        <div class="form-group">
+          <label for="http-method">Method:</label>
+          <select id="http-method" class="form-control">
+            <option value="GET">GET</option>
+            <option value="GET_ID">GET by ID</option>
+            <option value="HEAD">HEAD</option>
+          </select>
+        </div>
+
+        <div class="form-group flex-1">
+          <label for="endpoint-url">Target Endpoint:</label>
+          <input type="text" id="endpoint-url" class="form-control" value="http://localhost:3000/students">
+        </div>
+
+        <button id="execute-btn" class="btn btn-primary" onclick="executeApiCall()">
+          ▶ Send Request
+        </button>
+      </div>
+
+      <div class="sandbox-output">
+        <div class="output-header">
+          <span id="response-status" class="status-tag">Status: Ready</span>
+          <span id="response-time" class="time-tag">Time: -- ms</span>
+        </div>
+        <div class="output-body">
+          <label for="response-console">Response Payload / Headers:</label>
+          <pre id="response-console"><code>Click "Send Request" to test connection to http://localhost:3000/students</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Steps of Implementation -->
+    <section class="card implementation-steps" aria-labelledby="steps-heading">
+      <h2 id="steps-heading" class="section-title">
+        <span class="title-icon">🛠️</span> Steps of Implementation
+      </h2>
+      <p class="section-sub">Complete walkthrough of how this REST API practice project was built from scratch.</p>
+
+      <div class="steps-timeline">
+        <!-- Step 1 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">1</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h3>Create Project Folder Structure</h3>
+            <p>Set up the project directory with the following files:</p>
+            <div class="code-block">
+              <code>
+Exp2/
+├── index.html                         (Dashboard UI)
+├── style.css                          (Styling)
+├── db.json                            (JSON Server Database)
+├── CourseGap-Postman-Collection.json   (Postman Collection)
+└── README.md                          (Documentation)
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">2</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h3>Create the <code>db.json</code> Database File</h3>
+            <p>Define a <code>students</code> resource with at least 3 student entries. Each student object includes:
+              <code>id</code>, <code>name</code>, <code>semester</code>, <code>department</code>, <code>email</code>,
+              <code>attendance</code>, <code>status</code>, and <code>subjects</code> (an array).
+            </p>
+            <div class="code-block">
+              <code>{
+  "students": [
+    {
+      "id": "S101",
+      "name": "Aarav Sharma",
+      "semester": 5,
+      "department": "Computer Science &amp; Engineering",
+      "email": "aarav.sharma@example.com",
+      "attendance": 88,
+      "status": "On Track",
+      "subjects": ["Data Structures", "DBMS", "Web Dev"]
+    },
+    ...
+  ]
+}</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">3</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h3>Install &amp; Start JSON Server</h3>
+            <p>JSON Server turns a plain <code>db.json</code> file into a full REST API with zero coding. Launch it with:</p>
+            <div class="code-block">
+              <code>npx json-server --watch db.json --port 3000</code>
+            </div>
+            <p>This automatically creates all CRUD endpoints at <code>http://localhost:3000/students</code>.</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">4</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h3>Build the HTML Dashboard (<code>index.html</code>)</h3>
+            <p>Create a clean, semantic HTML5 page containing:</p>
+            <ul class="impl-list">
+              <li><strong>Header</strong> — Project title, tech badges (JSON Server, Postman, Vanilla JS)</li>
+              <li><strong>How to Run</strong> — Setup instructions with numbered steps</li>
+              <li><strong>Student Data Table</strong> — Displays all student records from <code>db.json</code></li>
+              <li><strong>Endpoint Reference Cards</strong> — Visual cards for each REST method (GET, POST, PUT, PATCH, DELETE, HEAD)</li>
+              <li><strong>API Sandbox</strong> — Interactive console to test live requests against JSON Server</li>
+              <li><strong>Steps of Implementation</strong> — This section documenting the build process</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">5</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h3>Style the Dashboard (<code>style.css</code>)</h3>
+            <p>Apply modern, responsive CSS3 styling including:</p>
+            <ul class="impl-list">
+              <li>CSS Custom Properties (variables) for consistent theming</li>
+              <li>Color-coded <strong>CRUD method badges</strong> —
+                <span class="badge badge-get">GET</span>
+                <span class="badge badge-post">POST</span>
+                <span class="badge badge-put">PUT</span>
+                <span class="badge badge-patch">PATCH</span>
+                <span class="badge badge-delete">DELETE</span>
+                <span class="badge badge-head">HEAD</span></li>
+              <li>Responsive grid layout using CSS Grid &amp; Flexbox</li>
+              <li>Container queries for adaptive table layout on small screens</li>
+              <li>Google Fonts (Inter + Fira Code) for readability</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">6</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h3>Implement JavaScript for Live Data Fetching</h3>
+            <p>Add vanilla JavaScript to:</p>
+            <ul class="impl-list">
+              <li>Fetch live student data from <code>http://localhost:3000/students</code> using the Fetch API</li>
+              <li>Render data dynamically into the HTML table</li>
+              <li>Fall back to static embedded data when JSON Server is offline</li>
+              <li>Provide an interactive sandbox for sending GET and HEAD requests</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">7</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h3>Create Postman Collection (<code>CourseGap-Postman-Collection.json</code>)</h3>
+            <p>Build a Postman v2.1 collection file with 7 pre-configured requests:</p>
+            <ol class="impl-list">
+              <li><span class="badge badge-get">GET</span> <code>/students</code> — Retrieve all students</li>
+              <li><span class="badge badge-get">GET</span> <code>/students/S101</code> — Retrieve single student</li>
+              <li><span class="badge badge-post">POST</span> <code>/students</code> — Add new student (with full JSON body)</li>
+              <li><span class="badge badge-put">PUT</span> <code>/students/S105</code> — Full replace (with full JSON body)</li>
+              <li><span class="badge badge-patch">PATCH</span> <code>/students/S102</code> — Partial update (attendance &amp; status)</li>
+              <li><span class="badge badge-head">HEAD</span> <code>/students</code> — Inspect response headers</li>
+              <li><span class="badge badge-delete">DELETE</span> <code>/students/S105</code> — Delete test student</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Step 8 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">8</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h3>Test All Endpoints in Postman</h3>
+            <p>Import the collection into Postman and execute requests in the recommended order:</p>
+            <div class="workflow-alert">
+              <ol class="workflow-steps">
+                <li><span class="badge badge-get">GET</span> All Students → verify 200 OK + full array</li>
+                <li><span class="badge badge-post">POST</span> Create S105 → verify 201 Created</li>
+                <li><span class="badge badge-get">GET</span> Fetch S105 → verify creation succeeded</li>
+                <li><span class="badge badge-put">PUT</span> Replace S105 → verify 200 OK (full overwrite)</li>
+                <li><span class="badge badge-patch">PATCH</span> Update S102 → verify only supplied fields changed</li>
+                <li><span class="badge badge-head">HEAD</span> Inspect headers → verify headers with empty body</li>
+                <li><span class="badge badge-delete">DELETE</span> Remove S105 → verify 200 OK / 204</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 9 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">9</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h3>Understand PUT vs PATCH</h3>
+            <div class="put-patch-comparison">
+              <div class="compare-box compare-put">
+                <h4><span class="badge badge-put">PUT</span> Full Replacement</h4>
+                <ul>
+                  <li>Replaces the <strong>entire</strong> resource object</li>
+                  <li>Omitted fields are <strong>deleted</strong></li>
+                  <li>Must send <strong>all</strong> fields in request body</li>
+                  <li>Idempotent — same request always produces same result</li>
+                </ul>
+              </div>
+              <div class="compare-box compare-patch">
+                <h4><span class="badge badge-patch">PATCH</span> Partial Update</h4>
+                <ul>
+                  <li>Updates <strong>only supplied</strong> fields</li>
+                  <li>Omitted fields are <strong>preserved</strong> unchanged</li>
+                  <li>Send <strong>only</strong> the fields you want to change</li>
+                  <li>More efficient for single-field edits</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 10 -->
+        <div class="impl-step">
+          <div class="step-marker">
+            <span class="step-num">10</span>
+          </div>
+          <div class="step-content">
+            <h3>Write Documentation (<code>README.md</code>)</h3>
+            <p>Create a comprehensive README covering:</p>
+            <ul class="impl-list">
+              <li>Installation and server start instructions</li>
+              <li>Every endpoint with method, URL, body, status code, and expected result</li>
+              <li>Recommended Postman testing order</li>
+              <li>PUT vs PATCH difference table</li>
+              <li>Tech stack summary</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <p>CourseGap Companion — REST API Practice Project &copy; 2026</p>
+      <p class="footer-links">
+        <a href="README.md" target="_blank">View README Documentation</a> • 
+        <a href="CourseGap-Postman-Collection.json" download>Download Postman Collection</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Initial static fallback student data
+    const initialStudents = [
+      {
+        id: "S101",
+        name: "Aarav Sharma",
+        semester: 5,
+        department: "Computer Science & Engineering",
+        email: "aarav.sharma@example.com",
+        attendance: 88,
+        status: "On Track",
+        subjects: ["Data Structures & Algorithms", "Database Management Systems", "Web Development Technologies"]
+      },
+      {
+        id: "S102",
+        name: "Priya Patel",
+        semester: 4,
+        department: "Information Technology",
+        email: "priya.patel@example.com",
+        attendance: 64,
+        status: "At Risk",
+        subjects: ["Operating Systems", "Computer Networks", "Software Engineering"]
+      },
+      {
+        id: "S103",
+        name: "Rohan Mehta",
+        semester: 6,
+        department: "Computer Science & Engineering",
+        email: "rohan.mehta@example.com",
+        attendance: 94,
+        status: "Excellent",
+        subjects: ["Machine Learning", "Cloud Computing", "Cyber Security"]
+      },
+      {
+        id: "S104",
+        name: "Ananya Verma",
+        semester: 3,
+        department: "Electronics & Communication",
+        email: "ananya.verma@example.com",
+        attendance: 76,
+        status: "Needs Attention",
+        subjects: ["Digital Electronics", "Signals & Systems", "Microcontrollers"]
+      }
+    ];
+
+    function renderStudents(students) {
+      const tbody = document.getElementById('students-tbody');
+      tbody.innerHTML = '';
+      students.forEach(s => {
+        const tr = document.createElement('tr');
+        
+        let statusClass = 'status-pill status-neutral';
+        if (s.status === 'On Track' || s.status === 'Excellent') statusClass = 'status-pill status-success';
+        if (s.status === 'At Risk') statusClass = 'status-pill status-danger';
+        if (s.status === 'Needs Attention' || s.status === 'Warning') statusClass = 'status-pill status-warning';
+
+        const subjectsList = Array.isArray(s.subjects) 
+          ? s.subjects.map(sub => `<span class="subject-tag">${sub}</span>`).join(' ') 
+          : s.subjects;
+
+        tr.innerHTML = `
+          <th scope="row"><code>${s.id}</code></th>
+          <td><strong>${s.name}</strong></td>
+          <td>${s.department}</td>
+          <td>Sem ${s.semester}</td>
+          <td><a href="mailto:${s.email}">${s.email}</a></td>
+          <td><strong>${s.attendance}%</strong></td>
+          <td><span class="${statusClass}">${s.status}</span></td>
+          <td>${subjectsList}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function fetchLiveStudents() {
+      const btn = document.getElementById('refresh-table-btn');
+      btn.innerText = '⌛ Fetching...';
+      try {
+        const res = await fetch('http://localhost:3000/students');
+        if (res.ok) {
+          const data = await res.json();
+          renderStudents(data);
+          btn.innerText = '✅ Live Data Loaded!';
+          setTimeout(() => { btn.innerText = '🔄 Refresh Table Data'; }, 2000);
+        } else {
+          throw new Error(`Server returned ${res.status}`);
+        }
+      } catch (err) {
+        console.warn('JSON Server offline or unreachable. Rendering initial data.', err);
+        renderStudents(initialStudents);
+        btn.innerText = '⚠️ Static Fallback Data';
+        setTimeout(() => { btn.innerText = '🔄 Refresh Table Data'; }, 2000);
+      }
+    }
+
+    async function executeApiCall() {
+      const methodSelect = document.getElementById('http-method');
+      const urlInput = document.getElementById('endpoint-url');
+      const consoleOut = document.getElementById('response-console');
+      const statusTag = document.getElementById('response-status');
+      const timeTag = document.getElementById('response-time');
+
+      let method = methodSelect.value;
+      let url = urlInput.value;
+
+      if (method === 'GET_ID') {
+        method = 'GET';
+        if (!url.endsWith('/S101') && !url.includes('/students/')) {
+          url = 'http://localhost:3000/students/S101';
+        }
+      }
+
+      consoleOut.textContent = `Sending ${method} request to ${url}...`;
+      statusTag.textContent = 'Status: Pending...';
+      statusTag.className = 'status-tag status-pending';
+
+      const startTime = performance.now();
+      try {
+        const response = await fetch(url, { method: method });
+        const endTime = performance.now();
+        const duration = Math.round(endTime - startTime);
+        timeTag.textContent = `Time: ${duration} ms`;
+
+        statusTag.textContent = `Status: ${response.status} ${response.statusText}`;
+        statusTag.className = response.ok ? 'status-tag status-success' : 'status-tag status-danger';
+
+        if (method === 'HEAD') {
+          let headersText = `[HTTP/1.1 ${response.status} ${response.statusText}]\nHeaders:\n`;
+          for (let [key, val] of response.headers.entries()) {
+            headersText += `${key}: ${val}\n`;
+          }
+          headersText += `\nResponse Body: (0 bytes as expected for HEAD request)`;
+          consoleOut.textContent = headersText;
+        } else {
+          const data = await response.json();
+          consoleOut.textContent = JSON.stringify(data, null, 2);
+        }
+      } catch (err) {
+        const endTime = performance.now();
+        timeTag.textContent = `Time: ${Math.round(endTime - startTime)} ms`;
+        statusTag.textContent = 'Status: Connection Error';
+        statusTag.className = 'status-tag status-danger';
+        consoleOut.textContent = `❌ Unable to connect to ${url}.\n\nEnsure JSON Server is running in your terminal:\n  npx json-server --watch db.json --port 3000\n\nError details: ${err.message}`;
+      }
+    }
+
+    document.getElementById('http-method').addEventListener('change', function(e) {
+      const urlInput = document.getElementById('endpoint-url');
+      if (e.target.value === 'GET_ID') {
+        urlInput.value = 'http://localhost:3000/students/S101';
+      } else {
+        urlInput.value = 'http://localhost:3000/students';
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchLiveStudents();
+    });
+  </script>
+</body>
+</html>

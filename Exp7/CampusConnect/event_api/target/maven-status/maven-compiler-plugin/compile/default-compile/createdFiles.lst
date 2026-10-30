@@ -1,0 +1,14 @@
+com\campusconnect\events\controller\EventController.class
+com\campusconnect\events\dto\EventRequestDTO.class
+com\campusconnect\events\CampusConnectEventsApplication.class
+com\campusconnect\events\service\EventService.class
+com\campusconnect\events\config\DataLoader.class
+com\campusconnect\events\config\WebConfig.class
+com\campusconnect\events\model\Event.class
+com\campusconnect\events\repository\EventRepository.class
+com\campusconnect\events\dto\EventPatchDTO.class
+com\campusconnect\events\exception\InvalidEventDataException.class
+com\campusconnect\events\dto\ErrorResponseDTO.class
+com\campusconnect\events\exception\GlobalExceptionHandler.class
+com\campusconnect\events\exception\ResourceNotFoundException.class
+com\campusconnect\events\exception\EventCapacityException.class

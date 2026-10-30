@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CampusConnect - Student Academic Management System (Web and Mobile Application Development Experiment 1)">
+  <title>CampusConnect – Student Academic Management System</title>
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- 1. Header with Logo & Title -->
+  <header class="site-header">
+    <div class="container header-content">
+      <div class="brand-wrapper">
+        <div class="brand-logo" aria-hidden="true">CC</div>
+        <div class="brand-text">
+          <h1>CampusConnect</h1>
+          <p>Student Academic Management System</p>
+        </div>
+      </div>
+      <div class="header-badge">
+        Practical Exp 1 • Web & Mobile App Dev
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Sticky Navigation Bar -->
+  <nav class="main-nav" aria-label="Main Navigation">
+    <div class="container">
+      <ul class="nav-links">
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#attendance">Attendance</a></li>
+        <li><a href="#grades">Grades</a></li>
+        <li><a href="#notices">Notices</a></li>
+        <li><a href="#register">Registration</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="container">
+
+    <!-- 3. Dashboard Section -->
+    <section id="dashboard" class="section-block">
+      <div class="section-header">
+        <div class="section-icon">📊</div>
+        <h2>Academic Summary Dashboard</h2>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="stat-card">
+          <span class="stat-title">Student Name</span>
+          <span class="stat-value" style="font-size: 1.4rem;">Alex Mercer</span>
+          <span class="stat-subtitle">ID: CC2026-8942</span>
+        </article>
+
+        <article class="stat-card card-courses">
+          <span class="stat-title">Total Courses</span>
+          <span class="stat-value">3</span>
+          <span class="stat-subtitle">Enrolled this term</span>
+        </article>
+
+        <article class="stat-card card-attendance">
+          <span class="stat-title">Attendance %</span>
+          <span class="stat-value">88.5%</span>
+          <span class="stat-subtitle">Overall Average</span>
+        </article>
+
+        <article class="stat-card card-cgpa">
+          <span class="stat-title">Current CGPA</span>
+          <span class="stat-value">8.92</span>
+          <span class="stat-subtitle">Scale of 10.0</span>
+        </article>
+
+        <article class="stat-card card-pending">
+          <span class="stat-title">Pending Tasks</span>
+          <span class="stat-value">2</span>
+          <span class="stat-subtitle">Due this week</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Student Profile Section -->
+    <section id="profile" class="section-block">
+      <div class="section-header">
+        <div class="section-icon">👤</div>
+        <h2>Student Profile Information</h2>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-avatar">AM</div>
+        <div class="profile-details">
+          <div class="profile-item">
+            <span class="profile-label">Student ID</span>
+            <span class="profile-value">CC2026-8942</span>
+          </div>
+
+          <div class="profile-item">
+            <span class="profile-label">Full Name</span>
+            <span class="profile-value">Alex Mercer</span>
+          </div>
+
+          <div class="profile-item">
+            <span class="profile-label">Email Address</span>
+            <span class="profile-value">alex.mercer@campusconnect.edu</span>
+          </div>
+
+          <div class="profile-item">
+            <span class="profile-label">Branch</span>
+            <span class="profile-value">Computer Science & Eng.</span>
+          </div>
+
+          <div class="profile-item">
+            <span class="profile-label">Semester</span>
+            <span class="profile-value">5th Semester</span>
+          </div>
+
+          <div class="profile-item">
+            <span class="profile-label">Division</span>
+            <span class="profile-value">Division A</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Courses Section -->
+    <section id="courses" class="section-block">
+      <div class="section-header">
+        <div class="section-icon">📚</div>
+        <h2>Enrolled Courses</h2>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Course Code</th>
+              <th>Course Name</th>
+              <th>Faculty</th>
+              <th>Credits</th>
+              <th>Semester</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>CS501</strong></td>
+              <td>Web & Mobile Application Development</td>
+              <td>Dr. Sarah Jenkins</td>
+              <td>4</td>
+              <td>Semester 5</td>
+            </tr>
+            <tr>
+              <td><strong>CS502</strong></td>
+              <td>Database Management Systems</td>
+              <td>Prof. Robert Vance</td>
+              <td>4</td>
+              <td>Semester 5</td>
+            </tr>
+            <tr>
+              <td><strong>CS503</strong></td>
+              <td>Computer Networks & Security</td>
+              <td>Dr. Alan Turing</td>
+              <td>3</td>
+              <td>Semester 5</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. Attendance Section -->
+    <section id="attendance" class="section-block">
+      <div class="section-header">
+        <div class="section-icon">📅</div>
+        <h2>Attendance Tracking</h2>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Total Lectures</th>
+              <th>Attended</th>
+              <th>Attendance %</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Web & Mobile Application Development</td>
+              <td>40</td>
+              <td>36</td>
+              <td><strong>90.0%</strong></td>
+              <td><span class="status-badge badge-safe">Safe / Good</span></td>
+            </tr>
+            <tr>
+              <td>Database Management Systems</td>
+              <td>38</td>
+              <td>34</td>
+              <td><strong>89.4%</strong></td>
+              <td><span class="status-badge badge-safe">Safe / Good</span></td>
+            </tr>
+            <tr>
+              <td>Computer Networks & Security</td>
+              <td>36</td>
+              <td>26</td>
+              <td><strong>72.2%</strong></td>
+              <td><span class="status-badge badge-low">Low Attendance</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. Grades Section -->
+    <section id="grades" class="section-block">
+      <div class="section-header">
+        <div class="section-icon">🎓</div>
+        <h2>Academic Grades & Performance</h2>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Internal Marks</th>
+              <th>External Marks</th>
+              <th>Grade</th>
+              <th>Grade Point</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Web & Mobile Application Development</td>
+              <td>28 / 30</td>
+              <td>62 / 70</td>
+              <td><strong>A+</strong></td>
+              <td>10.0</td>
+            </tr>
+            <tr>
+              <td>Database Management Systems</td>
+              <td>25 / 30</td>
+              <td>58 / 70</td>
+              <td><strong>A</strong></td>
+              <td>9.0</td>
+            </tr>
+            <tr>
+              <td>Computer Networks & Security</td>
+              <td>22 / 30</td>
+              <td>50 / 70</td>
+              <td><strong>B+</strong></td>
+              <td>8.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 8. Notices Section -->
+    <section id="notices" class="section-block">
+      <div class="section-header">
+        <div class="section-icon">📢</div>
+        <h2>Academic Notices & Bulletins</h2>
+      </div>
+
+      <ul class="notices-list">
+        <li class="notice-item">
+          <div class="notice-meta">
+            <span class="notice-tag">Examinations</span>
+            <span class="notice-date">August 15, 2026</span>
+          </div>
+          <h3 class="notice-title">Mid-Semester Examination Schedule Announced</h3>
+          <p class="notice-desc">The official timetable for 5th Semester Mid-Term Examinations has been published on the student portal. Examinations commence on September 1, 2026.</p>
+        </li>
+
+        <li class="notice-item">
+          <div class="notice-meta">
+            <span class="notice-tag">Academic</span>
+            <span class="notice-date">August 20, 2026</span>
+          </div>
+          <h3 class="notice-title">Practical Experiment 1 Submission Deadline</h3>
+          <p class="notice-desc">All students enrolled in Web & Mobile Application Development must submit Experiment 1 (HTML5, CSS3, JSON static layout) before 5:00 PM.</p>
+        </li>
+
+        <li class="notice-item">
+          <div class="notice-meta">
+            <span class="notice-tag">Events</span>
+            <span class="notice-date">August 22, 2026</span>
+          </div>
+          <h3 class="notice-title">Guest Lecture on Modern Web & Cloud Security</h3>
+          <p class="notice-desc">Join Dr. Marcus Sterling for an interactive industry session on secure frontend design and cloud applications in the Main Auditorium at 2:00 PM.</p>
+        </li>
+
+        <li class="notice-item">
+          <div class="notice-meta">
+            <span class="notice-tag">General Notice</span>
+            <span class="notice-date">August 25, 2026</span>
+          </div>
+          <h3 class="notice-title">Library Book Return Reminder for Mid-Term</h3>
+          <p class="notice-desc">Students are reminded to return or renew all borrowed reference textbooks and lab manuals prior to the examination week.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 9. Registration Form Section -->
+    <section id="register" class="section-block">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>New Student Registration Form</h2>
+      </div>
+
+      <form class="registration-form" action="#" method="post">
+        <!-- Fieldset 1: Personal Details -->
+        <fieldset class="form-fieldset">
+          <legend>Personal Information</legend>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="fullName">Full Name <span class="required-star">*</span></label>
+              <input type="text" id="fullName" name="fullName" class="form-control" placeholder="e.g., John Doe" required>
+            </div>
+
+            <div class="form-group">
+              <label for="studentId">Student ID <span class="required-star">*</span></label>
+              <input type="text" id="studentId" name="studentId" class="form-control" placeholder="e.g., CC2026-1001" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address <span class="required-star">*</span></label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="john.doe@campusconnect.edu" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number <span class="required-star">*</span></label>
+              <input type="tel" id="phone" name="phone" class="form-control" placeholder="+1 (555) 000-0000" pattern="[\+0-9\s\-\(\)]{10,20}" required>
+            </div>
+
+            <div class="form-group">
+              <label for="dob">Date of Birth <span class="required-star">*</span></label>
+              <input type="date" id="dob" name="dob" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label>Gender <span class="required-star">*</span></label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="gender" value="male" required checked> Male
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="gender" value="female" required> Female
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="gender" value="other" required> Other
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="address">Residential Address <span class="required-star">*</span></label>
+              <textarea id="address" name="address" class="form-control" rows="3" placeholder="Enter street address, city, state and zip code" required></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Fieldset 2: Academic Details -->
+        <fieldset class="form-fieldset">
+          <legend>Academic Information</legend>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="branch">Department / Branch <span class="required-star">*</span></label>
+              <select id="branch" name="branch" class="form-control" required>
+                <option value="" disabled selected>Select Branch</option>
+                <option value="CSE">Computer Science & Engineering</option>
+                <option value="IT">Information Technology</option>
+                <option value="ECE">Electronics & Communication</option>
+                <option value="ME">Mechanical Engineering</option>
+                <option value="CE">Civil Engineering</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="semester">Semester <span class="required-star">*</span></label>
+              <select id="semester" name="semester" class="form-control" required>
+                <option value="" disabled selected>Select Semester</option>
+                <option value="1">1st Semester</option>
+                <option value="2">2nd Semester</option>
+                <option value="3">3rd Semester</option>
+                <option value="4">4th Semester</option>
+                <option value="5" selected>5th Semester</option>
+                <option value="6">6th Semester</option>
+                <option value="7">7th Semester</option>
+                <option value="8">8th Semester</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="division">Division <span class="required-star">*</span></label>
+              <select id="division" name="division" class="form-control" required>
+                <option value="" disabled selected>Select Division</option>
+                <option value="A" selected>Division A</option>
+                <option value="B">Division B</option>
+                <option value="C">Division C</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Fieldset 3: Account Credentials -->
+        <fieldset class="form-fieldset">
+          <legend>Account Security</legend>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="password">Password <span class="required-star">*</span></label>
+              <input type="password" id="password" name="password" class="form-control" minlength="8" placeholder="At least 8 characters" required>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password <span class="required-star">*</span></label>
+              <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" minlength="8" placeholder="Re-enter password" required>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="reset" class="btn btn-secondary">Clear / Reset</button>
+          <button type="submit" class="btn btn-primary">Submit Registration</button>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- 10. Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-info">
+        <h3>CampusConnect Portal</h3>
+        <p>Student Academic Management System — Experiment 1 Practical Submission</p>
+      </div>
+
+      <ul class="footer-nav">
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#attendance">Attendance</a></li>
+        <li><a href="#grades">Grades</a></li>
+        <li><a href="#register">Register</a></li>
+      </ul>
+    </div>
+
+    <div class="container copyright">
+      <p>&copy; 2026 CampusConnect System. Developed for Web and Mobile Application Development Practical.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

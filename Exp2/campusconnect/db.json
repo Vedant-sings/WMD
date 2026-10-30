@@ -1,0 +1,153 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "title": "TechFest 2026",
+      "category": "Technical",
+      "date": "2026-10-15",
+      "time": "10:00 AM",
+      "venue": "Main Auditorium",
+      "organizer": "CSE Department",
+      "capacity": 200,
+      "registeredCount": 145,
+      "description": "Annual technical festival featuring project exhibitions, coding competitions, and guest lectures from industry leaders."
+    },
+    {
+      "id": 2,
+      "title": "Cultural Night Gala",
+      "category": "Cultural",
+      "date": "2026-10-22",
+      "time": "6:00 PM",
+      "venue": "Open Air Theatre",
+      "organizer": "Student Council",
+      "capacity": 500,
+      "registeredCount": 320,
+      "description": "An evening of music, dance, and drama performances celebrating campus diversity and talent."
+    },
+    {
+      "id": 3,
+      "title": "Inter-College Cricket Tournament",
+      "category": "Sports",
+      "date": "2026-11-05",
+      "time": "8:00 AM",
+      "venue": "Sports Ground",
+      "organizer": "Sports Committee",
+      "capacity": 150,
+      "registeredCount": 150,
+      "description": "Three-day cricket tournament featuring teams from 12 colleges across the region."
+    },
+    {
+      "id": 4,
+      "title": "AI & Machine Learning Workshop",
+      "category": "Workshop",
+      "date": "2026-11-12",
+      "time": "9:30 AM",
+      "venue": "Seminar Hall B",
+      "organizer": "AI Research Lab",
+      "capacity": 60,
+      "registeredCount": 42,
+      "description": "Hands-on workshop covering neural networks, NLP, and computer vision with Python and TensorFlow."
+    },
+    {
+      "id": 5,
+      "title": "Hackathon: Code for Campus",
+      "category": "Technical",
+      "date": "2026-11-20",
+      "time": "9:00 AM",
+      "venue": "Innovation Hub",
+      "organizer": "Coding Club",
+      "capacity": 100,
+      "registeredCount": 78,
+      "description": "24-hour hackathon to build solutions for real campus problems. Team size 2-4. Prizes worth fifty thousand rupees."
+    },
+    {
+      "id": 6,
+      "title": "Photography Walk",
+      "category": "Cultural",
+      "date": "2026-11-25",
+      "time": "5:00 PM",
+      "venue": "Campus Heritage Trail",
+      "organizer": "Photography Club",
+      "capacity": 30,
+      "registeredCount": 18,
+      "description": "Guided evening photography walk exploring campus architecture and natural beauty during golden hour."
+    }
+  ],
+  "announcements": [
+    {
+      "id": 1,
+      "title": "Mid-Semester Examination Schedule Released",
+      "category": "Academic",
+      "date": "2026-10-01",
+      "author": "Examination Cell",
+      "message": "The mid-semester examination schedule for all departments has been published. Exams will commence from October 20, 2026. Students are advised to check the department notice boards and the university portal for detailed timetables."
+    },
+    {
+      "id": 2,
+      "title": "Campus Placement Drive — Infosys",
+      "category": "Placement",
+      "date": "2026-10-05",
+      "author": "Training & Placement Office",
+      "message": "Infosys will conduct an on-campus placement drive on October 18, 2026. Eligible branches: CSE, IT, ECE. Minimum CGPA requirement: 7.0. Register on the placement portal before October 12."
+    },
+    {
+      "id": 3,
+      "title": "Library Extended Hours During Exams",
+      "category": "General",
+      "date": "2026-10-08",
+      "author": "Central Library",
+      "message": "The central library will remain open until 11:00 PM during the examination period (October 20 to November 5). Students must carry valid ID cards for entry after 8:00 PM."
+    },
+    {
+      "id": 4,
+      "title": "Emergency: Water Supply Disruption",
+      "category": "Urgent",
+      "date": "2026-10-10",
+      "author": "Campus Administration",
+      "message": "Due to maintenance work on the main pipeline, water supply to Hostels A, B, and C will be disrupted on October 12 from 6:00 AM to 2:00 PM. Tanker supply will be arranged. Please store water in advance."
+    },
+    {
+      "id": 5,
+      "title": "Research Paper Submission Deadline Extended",
+      "category": "Academic",
+      "date": "2026-10-12",
+      "author": "Research & Development Cell",
+      "message": "The deadline for submitting research papers for the Annual Research Symposium has been extended to November 1, 2026. Submit via the R&D portal. Contact rd@campus.edu for queries."
+    }
+  ],
+  "supportRequests": [
+    {
+      "id": 1,
+      "studentName": "Aarav Sharma",
+      "email": "aarav.sharma@campus.edu",
+      "category": "Technical",
+      "subject": "WiFi Not Working in Hostel Block C",
+      "message": "The WiFi connection in Hostel Block C, Room 312 has been down for the past three days. I have tried restarting the router and reconnecting but the issue persists. This is affecting my coursework submissions.",
+      "priority": "High",
+      "status": "Open",
+      "createdAt": "2026-09-25T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "studentName": "Priya Patel",
+      "email": "priya.patel@campus.edu",
+      "category": "Academic",
+      "subject": "Course Registration Error",
+      "message": "I am unable to register for the Elective course Advanced Databases (CS-604). The portal shows section full but the department confirmed seats are available. Please resolve this urgently.",
+      "priority": "Medium",
+      "status": "In Progress",
+      "createdAt": "2026-09-27T14:15:00Z"
+    },
+    {
+      "id": 3,
+      "studentName": "Rohan Mehta",
+      "email": "rohan.mehta@campus.edu",
+      "category": "Facilities",
+      "subject": "Broken Desk in Lecture Hall 204",
+      "message": "Three desks in Lecture Hall 204 (seats 15, 16, and 17) have broken writing boards. Students sitting there have to write on their laps. Please arrange repair or replacement.",
+      "priority": "Low",
+      "status": "Open",
+      "createdAt": "2026-09-28T09:00:00Z"
+    }
+  ]
+}

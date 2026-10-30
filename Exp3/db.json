@@ -1,0 +1,94 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "name": "Aarav Sharma",
+      "email": "aarav.sharma@example.edu",
+      "semester": 4,
+      "attendance": 84,
+      "overallMarks": 78,
+      "status": "Active",
+      "subjects": [
+        { "code": "CS401", "name": "Data Structures & Algorithms", "marks": 82, "attendance": 88, "gap": false },
+        { "code": "CS402", "name": "Database Management Systems", "marks": 75, "attendance": 80, "gap": false },
+        { "code": "CS403", "name": "Operating Systems", "marks": 46, "attendance": 70, "gap": true },
+        { "code": "MA401", "name": "Discrete Mathematics", "marks": 79, "attendance": 86, "gap": false }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Diya Patel",
+      "email": "diya.patel@example.edu",
+      "semester": 6,
+      "attendance": 72,
+      "overallMarks": 61,
+      "status": "At Risk",
+      "subjects": [
+        { "code": "CS601", "name": "Compiler Design", "marks": 48, "attendance": 68, "gap": true },
+        { "code": "CS602", "name": "Computer Networks", "marks": 64, "attendance": 74, "gap": false },
+        { "code": "CS603", "name": "Software Engineering", "marks": 70, "attendance": 78, "gap": false },
+        { "code": "CS604", "name": "Cloud Computing", "marks": 42, "attendance": 66, "gap": true }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Rohan Verma",
+      "email": "rohan.verma@example.edu",
+      "semester": 3,
+      "attendance": 92,
+      "overallMarks": 89,
+      "status": "Active",
+      "subjects": [
+        { "code": "CS301", "name": "Object-Oriented Programming", "marks": 91, "attendance": 94, "gap": false },
+        { "code": "CS302", "name": "Digital Logic & Design", "marks": 86, "attendance": 90, "gap": false },
+        { "code": "CS303", "name": "Computer Organization", "marks": 88, "attendance": 92, "gap": false },
+        { "code": "MA301", "name": "Linear Algebra", "marks": 92, "attendance": 95, "gap": false }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Ananya Iyer",
+      "email": "ananya.iyer@example.edu",
+      "semester": 5,
+      "attendance": 68,
+      "overallMarks": 54,
+      "status": "At Risk",
+      "subjects": [
+        { "code": "CS501", "name": "Theory of Computation", "marks": 44, "attendance": 62, "gap": true },
+        { "code": "CS502", "name": "Web Technology", "marks": 58, "attendance": 74, "gap": false },
+        { "code": "CS503", "name": "Artificial Intelligence", "marks": 62, "attendance": 71, "gap": false },
+        { "code": "CS504", "name": "Cyber Security", "marks": 49, "attendance": 65, "gap": true }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Kabir Das",
+      "email": "kabir.das@example.edu",
+      "semester": 4,
+      "attendance": 88,
+      "overallMarks": 82,
+      "status": "Active",
+      "subjects": [
+        { "code": "CS401", "name": "Data Structures & Algorithms", "marks": 85, "attendance": 90, "gap": false },
+        { "code": "CS402", "name": "Database Management Systems", "marks": 80, "attendance": 86, "gap": false },
+        { "code": "CS403", "name": "Operating Systems", "marks": 78, "attendance": 85, "gap": false },
+        { "code": "MA401", "name": "Discrete Mathematics", "marks": 84, "attendance": 90, "gap": false }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Sneha Roy",
+      "email": "sneha.roy@example.edu",
+      "semester": 2,
+      "attendance": 74,
+      "overallMarks": 65,
+      "status": "At Risk",
+      "subjects": [
+        { "code": "CS201", "name": "C Programming & Problem Solving", "marks": 72, "attendance": 76, "gap": false },
+        { "code": "PH201", "name": "Engineering Physics", "marks": 47, "attendance": 70, "gap": true },
+        { "code": "MA201", "name": "Calculus & Differential Equations", "marks": 68, "attendance": 75, "gap": false },
+        { "code": "EE201", "name": "Basic Electrical Engineering", "marks": 62, "attendance": 73, "gap": false }
+      ]
+    }
+  ]
+}

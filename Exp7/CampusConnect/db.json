@@ -1,0 +1,160 @@
+{
+  "students": [
+    {
+      "studentId": "CC2026-8943",
+      "fullName": "Sophia Patel",
+      "email": "sophia.patel@campusconnect.edu",
+      "phone": "+1 (555) 345-6789",
+      "branch": "Information Technology",
+      "semester": "5th Semester",
+      "division": "B",
+      "cgpa": 9.15,
+      "dateOfBirth": "2004-09-21",
+      "gender": "Female",
+      "address": "108 Innovation Boulevard, Hostel 4",
+      "id": "YgFTibyzNDo"
+    },
+    {
+      "studentId": "CC2026-8944",
+      "fullName": "Marcus Chen",
+      "email": "marcus.chen@campusconnect.edu",
+      "phone": "+1 (555) 456-7890",
+      "branch": "Electronics & Communication",
+      "semester": "5th Semester",
+      "division": "A",
+      "cgpa": 8.45,
+      "dateOfBirth": "2003-12-05",
+      "gender": "Male",
+      "address": "77 University Heights, North Campus",
+      "id": "LKmXxP_D_S8"
+    },
+    {
+      "id": "p1XhaBYh_OI"
+    },
+    {
+      "name": "Aarav Mehta",
+      "email": "aarav@example.com",
+      "branch": "CSE",
+      "semester": 5,
+      "id": "SfMWK_KKAvU"
+    }
+  ],
+  "courses": [
+    {
+      "courseCode": "CS501",
+      "courseName": "Web & Mobile Application Development",
+      "faculty": "Dr. Sarah Jenkins",
+      "credits": 4,
+      "semester": 5,
+      "id": "4P2-iVzAAIY"
+    },
+    {
+      "courseCode": "CS502",
+      "courseName": "Database Management Systems",
+      "faculty": "Prof. Robert Vance",
+      "credits": 4,
+      "semester": 5,
+      "id": "_XmfLf-1irk"
+    },
+    {
+      "courseCode": "CS503",
+      "courseName": "Computer Networks & Security",
+      "faculty": "Dr. Alan Turing",
+      "credits": 3,
+      "semester": 5,
+      "id": "8FItyCLb18M"
+    }
+  ],
+  "attendance": [
+    {
+      "courseCode": "CS501",
+      "courseName": "Web & Mobile Application Development",
+      "totalLectures": 40,
+      "attendedLectures": 36,
+      "attendancePercentage": 90,
+      "status": "Safe",
+      "id": "zsgDEYZSpLg"
+    },
+    {
+      "courseCode": "CS502",
+      "courseName": "Database Management Systems",
+      "totalLectures": 38,
+      "attendedLectures": 34,
+      "attendancePercentage": 89.4,
+      "status": "Safe",
+      "id": "ZR8_GXc568g"
+    },
+    {
+      "courseCode": "CS503",
+      "courseName": "Computer Networks & Security",
+      "totalLectures": 36,
+      "attendedLectures": 26,
+      "attendancePercentage": 72.2,
+      "status": "Low Attendance",
+      "id": "_99ykqPOsLM"
+    }
+  ],
+  "grades": [
+    {
+      "courseCode": "CS501",
+      "courseName": "Web & Mobile Application Development",
+      "internalMarks": 28,
+      "externalMarks": 62,
+      "totalMarks": 90,
+      "grade": "A+",
+      "gradePoint": 10,
+      "id": "6h1kbMAD_u0"
+    },
+    {
+      "courseCode": "CS502",
+      "courseName": "Database Management Systems",
+      "internalMarks": 25,
+      "externalMarks": 58,
+      "totalMarks": 83,
+      "grade": "A",
+      "gradePoint": 9,
+      "id": "fySslC4qr74"
+    },
+    {
+      "courseCode": "CS503",
+      "courseName": "Computer Networks & Security",
+      "internalMarks": 22,
+      "externalMarks": 50,
+      "totalMarks": 72,
+      "grade": "B+",
+      "gradePoint": 8,
+      "id": "yAtnGXs-3j4"
+    }
+  ],
+  "notices": [
+    {
+      "id": "1",
+      "title": "Mid-Semester Examination Schedule Announced",
+      "date": "2026-08-15",
+      "category": "Examinations",
+      "content": "The timetable for 5th Semester Mid-Term Examinations has been published. Exams commence on September 1, 2026."
+    },
+    {
+      "id": "2",
+      "title": "Practical Experiment 1 Submission Deadline",
+      "date": "2026-08-20",
+      "category": "Academic",
+      "content": "All students must submit Experiment 1 (HTML5, CSS3, JSON static portal) to the portal before 5:00 PM."
+    },
+    {
+      "id": "3",
+      "title": "Guest Lecture on Modern Web & Cloud Security",
+      "date": "2026-08-22",
+      "category": "Events",
+      "content": "Join Dr. Marcus Sterling for an interactive session on secure web architecture in Main Auditorium at 2:00 PM."
+    },
+    {
+      "id": "4",
+      "title": "Library Book Return Reminder for Mid-Term",
+      "date": "2026-08-25",
+      "category": "General Notice",
+      "content": "Please return or renew all borrowed reference materials before the upcoming examination period."
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

@@ -1,0 +1,538 @@
+{
+  "info": {
+    "_postman_id": "campusconnect-auth-service-exp8-2026",
+    "name": "CampusConnect Auth Service",
+    "description": "Complete Postman collection for the CampusConnect JWT Authentication Service (Experiment 8).\n\nStack: Python · Flask · PyJWT · Werkzeug · Flask-CORS\nBase URL: http://127.0.0.1:5050\n\n⚠️  DISCLAIMER: This experiment demonstrates JWT authentication concepts only.\n    It does NOT implement a complete OAuth2 authorization server.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🚀  HOW TO RUN:\n  1. cd auth_service\n  2. Copy .env.example to .env and set JWT_SECRET\n  3. pip install -r requirements.txt\n  4. python app.py\n\n🔁  RECOMMENDED TESTING ORDER:\n  1.  Register Student\n  2.  Register Admin\n  3.  Login (student) → copy token to collection variable {{student_token}}\n  4.  Login (admin)   → copy token to collection variable {{admin_token}}\n  5.  Dashboard — Valid Token (student)\n  6.  Dashboard — No Token\n  7.  Dashboard — Invalid Token\n  8.  Admin Events — Student Token (403)\n  9.  Admin Events — Admin Token (200)\n  10. Health Check\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5050",
+      "type": "string",
+      "description": "Base URL of the CampusConnect Flask Auth Service"
+    },
+    {
+      "key": "student_token",
+      "value": "",
+      "type": "string",
+      "description": "Paste the JWT token returned by the student Login request here"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string",
+      "description": "Paste the JWT token returned by the admin Login request here"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Register — Student",
+      "item": [
+        {
+          "name": "POST /register — Register Student (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sophia Patel\",\n  \"email\": \"sophia.patel@campusconnect.edu\",\n  \"password\": \"SecurePass@2026\",\n  \"role\": \"student\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["register"]
+            },
+            "description": "Registers a new CampusConnect student account.\n\nExpected Response: 201 Created\n{\n  \"success\": true,\n  \"message\": \"Account created successfully. Welcome to CampusConnect, Sophia Patel!\",\n  \"user\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"Sophia Patel\",\n    \"email\": \"sophia.patel@campusconnect.edu\",\n    \"role\": \"student\",\n    \"created_at\": \"...\"\n  }\n}\n\n⚠️  Note: password and password_hash are NEVER returned in any response."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /register — Duplicate Email (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sophia Patel Duplicate\",\n  \"email\": \"sophia.patel@campusconnect.edu\",\n  \"password\": \"AnotherPass@123\",\n  \"role\": \"student\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["register"]
+            },
+            "description": "Attempts to register with an email that already exists.\n\nExpected Response: 409 Conflict\n{\n  \"success\": false,\n  \"error\": \"An account with email 'sophia.patel@campusconnect.edu' already exists.\"\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /register — Invalid Role (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rogue User\",\n  \"email\": \"rogue@campusconnect.edu\",\n  \"password\": \"Pass@2026!\",\n  \"role\": \"superadmin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["register"]
+            },
+            "description": "Sends an invalid role ('superadmin'). Only 'student' and 'admin' are allowed.\n\nExpected Response: 400 Bad Request\n{\n  \"success\": false,\n  \"error\": \"Validation failed.\",\n  \"validation_errors\": {\n    \"role\": \"Role must be one of: admin, student.\"\n  }\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /register — Missing Fields (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"incomplete@campusconnect.edu\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["register"]
+            },
+            "description": "Sends a body with only email — all other required fields are missing.\n\nExpected Response: 400 Bad Request\n{\n  \"success\": false,\n  \"error\": \"Validation failed.\",\n  \"validation_errors\": {\n    \"name\": \"Name is required.\",\n    \"password\": \"Password is required.\",\n    \"role\": \"Role is required.\"\n  }\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /register — Short Password (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marcus Chen\",\n  \"email\": \"marcus.new@campusconnect.edu\",\n  \"password\": \"abc\",\n  \"role\": \"student\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["register"]
+            },
+            "description": "Sends a password shorter than 8 characters.\n\nExpected Response: 400 Bad Request\n{\n  \"success\": false,\n  \"error\": \"Validation failed.\",\n  \"validation_errors\": {\n    \"password\": \"Password must be at least 8 characters.\"\n  }\n}"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Register — Admin",
+      "item": [
+        {
+          "name": "POST /register — Register Admin (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dr. Sarah Jenkins\",\n  \"email\": \"sarah.jenkins@campusconnect.edu\",\n  \"password\": \"AdminSecure@2026\",\n  \"role\": \"admin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["register"]
+            },
+            "description": "Registers a new CampusConnect administrator account.\n\nExpected Response: 201 Created\n{\n  \"success\": true,\n  \"message\": \"Account created successfully. Welcome to CampusConnect, Dr. Sarah Jenkins!\",\n  \"user\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"Dr. Sarah Jenkins\",\n    \"email\": \"sarah.jenkins@campusconnect.edu\",\n    \"role\": \"admin\",\n    \"created_at\": \"...\"\n  }\n}"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Login",
+      "item": [
+        {
+          "name": "POST /login — Login Student (200 OK)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sophia.patel@campusconnect.edu\",\n  \"password\": \"SecurePass@2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["login"]
+            },
+            "description": "Logs in the registered student and returns a signed JWT token.\n\nExpected Response: 200 OK\n{\n  \"success\": true,\n  \"message\": \"Login successful.\",\n  \"token\": \"eyJ...<JWT>\",\n  \"expires_at\": \"...\",\n  \"token_type\": \"Bearer\",\n  \"user\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"Sophia Patel\",\n    \"email\": \"sophia.patel@campusconnect.edu\",\n    \"role\": \"student\",\n    \"created_at\": \"...\"\n  }\n}\n\n📋  AFTER RUNNING: Copy the 'token' value and paste it into the\n    collection variable 'student_token'."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /login — Login Admin (200 OK)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sarah.jenkins@campusconnect.edu\",\n  \"password\": \"AdminSecure@2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["login"]
+            },
+            "description": "Logs in the registered admin and returns a signed JWT token with role='admin'.\n\nExpected Response: 200 OK with token.\n\n📋  AFTER RUNNING: Copy the 'token' value and paste it into the\n    collection variable 'admin_token'."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /login — Wrong Password (401 Unauthorized)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sophia.patel@campusconnect.edu\",\n  \"password\": \"WrongPassword!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["login"]
+            },
+            "description": "Attempts login with correct email but wrong password.\n\nExpected Response: 401 Unauthorized\n{\n  \"success\": false,\n  \"error\": \"Invalid email or password. Please check your credentials.\"\n}\n\n🔒 Note: The error message is intentionally generic — it does not reveal whether\n   the email exists, preventing user enumeration attacks."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /login — Non-existent Email (401 Unauthorized)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"nobody@campusconnect.edu\",\n  \"password\": \"SomePass@2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["login"]
+            },
+            "description": "Attempts login with an email that was never registered.\n\nExpected Response: 401 Unauthorized (same generic message as wrong password\nto prevent user enumeration)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Dashboard — Protected Endpoint",
+      "item": [
+        {
+          "name": "GET /dashboard — Valid Student Token (200 OK)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{student_token}}",
+                "description": "Paste the student JWT token into the 'student_token' collection variable"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard"]
+            },
+            "description": "Accesses the protected dashboard with a valid student JWT token.\n\nPrerequisite: Run 'Login Student' first and set {{student_token}}.\n\nExpected Response: 200 OK\n{\n  \"success\": true,\n  \"dashboard\": {\n    \"user\": { \"id\": \"...\", \"name\": \"Sophia Patel\", \"email\": \"...\", \"role\": \"student\" },\n    \"welcome_message\": \"Welcome back, Sophia Patel! Your CampusConnect academic dashboard is ready.\",\n    \"permitted_actions\": [\"view_own_profile\", \"view_courses\", ...],\n    \"portal_sections\": [...],\n    \"system_info\": { \"campus\": \"...\", \"semester\": \"...\", \"token_expires_at\": \"...\" }\n  }\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /dashboard — Valid Admin Token (200 OK)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "Paste the admin JWT token into the 'admin_token' collection variable"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard"]
+            },
+            "description": "Accesses the dashboard with a valid admin JWT token. Admin gets expanded permitted_actions.\n\nPrerequisite: Run 'Login Admin' first and set {{admin_token}}.\n\nExpected Response: 200 OK with role='admin' and extended permitted_actions."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /dashboard — No Token (401 Unauthorized)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard"]
+            },
+            "description": "Attempts to access the protected dashboard with NO Authorization header.\n\nExpected Response: 401 Unauthorized\n{\n  \"success\": false,\n  \"error\": \"Authorization header missing or malformed. Provide: Authorization: Bearer <token>\"\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /dashboard — Invalid Token (401 Unauthorized)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer this.is.not.a.valid.jwt.token.at.all"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard"]
+            },
+            "description": "Sends a completely invalid/malformed JWT token string.\n\nExpected Response: 401 Unauthorized\n{\n  \"success\": false,\n  \"error\": \"Invalid token: ...\"\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /dashboard — Expired Token (401 Unauthorized)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE2MDAwMDAwMDAsImV4cCI6MTYwMDAwMDAwMX0.INVALID_SIGNATURE_EXPIRED"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard"]
+            },
+            "description": "Sends a JWT token with an expired timestamp. The service validates expiry and rejects it.\n\nExpected Response: 401 Unauthorized\n{\n  \"success\": false,\n  \"error\": \"Token has expired. Please log in again.\" or \"Invalid token: ...\"\n}\n\n💡 Tip: To test with a truly expired token, set JWT_EXPIRY_HOURS=0 in .env\n    (or a very small value), login, wait, then call this endpoint."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /dashboard — Missing Bearer Prefix (401 Unauthorized)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{student_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard"]
+            },
+            "description": "Sends the token WITHOUT the 'Bearer ' prefix.\n\nExpected Response: 401 Unauthorized — Authorization header missing or malformed."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Admin Events — Role-Restricted Endpoint",
+      "item": [
+        {
+          "name": "GET /admin/events — Student Token (403 Forbidden)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{student_token}}",
+                "description": "Valid student token — but this endpoint requires admin role"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/events",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "events"]
+            },
+            "description": "Uses a perfectly valid student JWT token to access an admin-only endpoint.\n\nPrerequisite: Set {{student_token}} from 'Login Student'.\n\nExpected Response: 403 Forbidden\n{\n  \"success\": false,\n  \"error\": \"Access denied. This endpoint requires administrator privileges. Students are not authorised to access event management.\"\n}\n\n🔑 Key concept: The token IS valid (not expired, not tampered), but the user's\n   ROLE does not permit access. This is role-based authorization."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /admin/events — Admin Token (200 OK)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "Valid admin token — grants access to the admin events panel"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/events",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "events"]
+            },
+            "description": "Uses a valid admin JWT token to access the admin event management panel.\n\nPrerequisite: Set {{admin_token}} from 'Login Admin'.\n\nExpected Response: 200 OK\n{\n  \"success\": true,\n  \"admin_panel\": {\n    \"message\": \"Admin event management panel — CampusConnect.\",\n    \"admin_email\": \"sarah.jenkins@campusconnect.edu\",\n    \"events_summary\": { ... },\n    \"management_actions\": [...],\n    \"linked_api\": { ... }\n  }\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /admin/events — No Token (401 Unauthorized)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/admin/events",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "events"]
+            },
+            "description": "Accesses admin endpoint with no Authorization header at all.\n\nExpected Response: 401 Unauthorized — Missing token error (auth check runs before role check)."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /admin/events — Invalid Token (401 Unauthorized)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer bad.token.here"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/events",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "events"]
+            },
+            "description": "Sends a malformed token to the admin endpoint.\n\nExpected Response: 401 Unauthorized — Invalid token error."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Health Check",
+      "item": [
+        {
+          "name": "GET /health — Service Liveness (200 OK)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Verifies the Flask auth service is running. No authentication required.\n\nExpected Response: 200 OK\n{\n  \"status\": \"ok\",\n  \"service\": \"CampusConnect Auth Service\",\n  \"experiment\": \"Experiment 8 — JWT Authentication\",\n  \"registered_users\": <count>\n}"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

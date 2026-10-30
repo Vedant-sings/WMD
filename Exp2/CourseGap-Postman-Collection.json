@@ -1,0 +1,199 @@
+{
+  "info": {
+    "_postman_id": "c1f7a010-coursegap-postman-collection",
+    "name": "CourseGap Companion - REST API Practice Collection",
+    "description": "Postman Collection for testing student REST endpoints powered by JSON Server on http://localhost:3000/students.\n\nRecommended Execution Order:\n1. GET /students (Fetch all students)\n2. POST /students (Create a test student S105)\n3. GET /students/:id (Retrieve single student e.g., S101 or S105)\n4. PUT /students/:id (Full replacement of student S105)\n5. PATCH /students/:id (Partial update of attendance/status on S102)\n6. HEAD /students (Inspect headers and status without body)\n7. DELETE /students/:id (Delete test student S105)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET /students - Retrieve All Students",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/students",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "students"
+          ]
+        },
+        "description": "Retrieves the complete array of student records from JSON Server.\nExpected Status: 200 OK\nExpected Response: JSON Array of all students."
+      },
+      "response": []
+    },
+    {
+      "name": "2. GET /students/:id - Retrieve One Student",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/students/S101",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "students",
+            "S101"
+          ]
+        },
+        "description": "Retrieves a specific student record by ID (e.g. S101).\nExpected Status: 200 OK\nExpected Response: JSON Object for student S101."
+      },
+      "response": []
+    },
+    {
+      "name": "3. POST /students - Add New Student",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": \"S105\",\n  \"name\": \"Vikramaditya Rao\",\n  \"semester\": 5,\n  \"department\": \"Computer Science & Engineering\",\n  \"email\": \"vikram.rao@example.com\",\n  \"attendance\": 91,\n  \"status\": \"On Track\",\n  \"subjects\": [\n    \"Artificial Intelligence\",\n    \"Web Technologies\",\n    \"Cloud Infrastructure\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/students",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "students"
+          ]
+        },
+        "description": "Adds a new student record (S105) to the JSON database.\nExpected Status: 201 Created\nExpected Response: JSON Object of the newly created student record."
+      },
+      "response": []
+    },
+    {
+      "name": "4. PUT /students/:id - Full Replace Student",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": \"S105\",\n  \"name\": \"Vikramaditya Rao\",\n  \"semester\": 6,\n  \"department\": \"Computer Science & Engineering\",\n  \"email\": \"vikram.rao.updated@example.com\",\n  \"attendance\": 95,\n  \"status\": \"Excellent\",\n  \"subjects\": [\n    \"Artificial Intelligence\",\n    \"Web Technologies\",\n    \"Cloud Infrastructure\",\n    \"Deep Learning\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/students/S105",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "students",
+            "S105"
+          ]
+        },
+        "description": "Completely replaces student record S105.\nNOTE: PUT replaces the full entity. Any omitted field in the request body will be removed from the resource.\nExpected Status: 200 OK\nExpected Response: Complete updated JSON Object."
+      },
+      "response": []
+    },
+    {
+      "name": "5. PATCH /students/:id - Partial Update Student",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"attendance\": 78,\n  \"status\": \"On Track\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/students/S102",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "students",
+            "S102"
+          ]
+        },
+        "description": "Partially updates specific fields (attendance and status) for student S102 without affecting other fields like name, department, or subjects.\nExpected Status: 200 OK\nExpected Response: Updated JSON Object with modified fields."
+      },
+      "response": []
+    },
+    {
+      "name": "6. HEAD /students - Inspect Response Headers",
+      "request": {
+        "method": "HEAD",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/students",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "students"
+          ]
+        },
+        "description": "Inspects response headers and status for /students without fetching body content.\nExpected Status: 200 OK\nExpected Headers: Content-Type, Content-Length, Cache-Control, Access-Control-Allow-Credentials, Date.\nExpected Body: Empty (0 bytes)."
+      },
+      "response": []
+    },
+    {
+      "name": "7. DELETE /students/:id - Delete Test Student",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/students/S105",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "students",
+            "S105"
+          ]
+        },
+        "description": "Deletes the test student record (S105).\nIMPORTANT PRE-REQUISITE: Always run request #3 (POST /students) to create test student S105 prior to executing DELETE to avoid removing base data.\nExpected Status: 200 OK (or 204 No Content)\nExpected Response: Empty object `{}` or no content."
+      },
+      "response": []
+    }
+  ]
+}

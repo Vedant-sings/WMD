@@ -1,0 +1,88 @@
+{
+  "students": [
+    {
+      "id": "STU101",
+      "name": "Aarav Sharma",
+      "email": "aarav.sharma@example.edu",
+      "semester": 4,
+      "course": "Computer Science & Engineering",
+      "status": "On Track",
+      "attendance": 92,
+      "marks": 88,
+      "gaps": 0,
+      "notes": "Consistently strong performance in algorithmic lab sessions."
+    },
+    {
+      "id": "STU102",
+      "name": "Priya Nair",
+      "email": "priya.nair@example.edu",
+      "semester": 4,
+      "course": "Information Technology",
+      "status": "Needs Attention",
+      "attendance": 74,
+      "marks": 62,
+      "gaps": 2,
+      "notes": "Low attendance in Database Systems. Needs remedial sessions."
+    },
+    {
+      "id": "STU103",
+      "name": "Rohan Deshmukh",
+      "email": "rohan.d@example.edu",
+      "semester": 6,
+      "course": "Computer Science & Engineering",
+      "status": "At Risk",
+      "attendance": 58,
+      "marks": 44,
+      "gaps": 3,
+      "notes": "Missed internal assessments 1 and 2. Counseling requested."
+    },
+    {
+      "id": "STU104",
+      "name": "Ananya Verma",
+      "email": "ananya.v@example.edu",
+      "semester": 6,
+      "course": "Electronics & Communication",
+      "status": "On Track",
+      "attendance": 96,
+      "marks": 91,
+      "gaps": 0,
+      "notes": "Exemplary capstone project progress."
+    },
+    {
+      "id": "STU105",
+      "name": "Kabir Mehta",
+      "email": "kabir.mehta@example.edu",
+      "semester": 2,
+      "course": "Computer Science & Engineering",
+      "status": "Needs Attention",
+      "attendance": 71,
+      "marks": 69,
+      "gaps": 1,
+      "notes": "Struggles with Discrete Math problem sets."
+    },
+    {
+      "id": "STU106",
+      "name": "Meera Iyer",
+      "email": "meera.iyer@example.edu",
+      "semester": 2,
+      "course": "Artificial Intelligence & Data Science",
+      "status": "On Track",
+      "attendance": 89,
+      "marks": 85,
+      "gaps": 0,
+      "notes": "Active participant in seminar discussions."
+    },
+    {
+      "id": "STU107",
+      "name": "Devansh Gupta",
+      "email": "devansh.g@example.edu",
+      "semester": 4,
+      "course": "Information Technology",
+      "status": "At Risk",
+      "attendance": 61,
+      "marks": 49,
+      "gaps": 3,
+      "notes": "Attendance warning issued to guardian."
+    }
+  ]
+}

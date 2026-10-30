@@ -1,0 +1,623 @@
+{
+  "info": {
+    "_postman_id": "campusconnect-event-api-2026",
+    "name": "CampusConnect Event API",
+    "description": "Complete Postman collection for the CampusConnect Event Management REST API (Spring Boot 3 · Java 17 · H2). Covers all CRUD endpoints with valid and invalid examples for every operation.\n\nBase URL: http://localhost:8080\nAPI prefix: /api/events\n\nRun the Spring Boot app first:\n  cd event_api && mvnw.cmd spring-boot:run",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "event_id",
+      "value": "1",
+      "type": "string",
+      "description": "Update this after creating or fetching an event"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. GET — All Events",
+      "item": [
+        {
+          "name": "GET /api/events — Retrieve All Events (200 OK)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/events",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events"]
+            },
+            "description": "Retrieves the full list of CampusConnect events from the H2 in-memory database.\n\nExpected: 200 OK with a JSON array of 5 pre-loaded sample events."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. GET — Single Event",
+      "item": [
+        {
+          "name": "GET /api/events/{id} — Retrieve Event by ID (200 OK)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}"]
+            },
+            "description": "Retrieves a single event by its numeric ID.\n\nExpected: 200 OK with the matching event JSON object.\nSet the `event_id` collection variable to a valid ID (e.g., 1)."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/events/9999 — Event Not Found (404 Not Found)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/events/9999",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "9999"]
+            },
+            "description": "Attempts to retrieve an event with a non-existent ID.\n\nExpected: 404 Not Found with JSON error body:\n{\n  \"timestamp\": \"...\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Event with ID 9999 not found\",\n  \"path\": \"/api/events/9999\"\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/events/abc — Invalid ID Type (400 Bad Request)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/events/abc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "abc"]
+            },
+            "description": "Attempts to fetch an event with a non-numeric path variable.\n\nExpected: 400 Bad Request — type mismatch error (Long required, String given)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. POST — Create Event",
+      "item": [
+        {
+          "name": "POST /api/events — Create New Event (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"AI & Robotics Symposium 2026\",\n  \"category\": \"Technical\",\n  \"date\": \"2026-11-20\",\n  \"time\": \"11:00 AM\",\n  \"venue\": \"Robotics Arena, Hall 3\",\n  \"organizer\": \"Robotics Society\",\n  \"capacity\": 80,\n  \"registeredCount\": 25,\n  \"description\": \"Showcase of autonomous robotics and ML projects by campus student teams competing for inter-university awards.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events"]
+            },
+            "description": "Creates a new CampusConnect event. All fields are required.\n\nExpected: 201 Created with the newly created event (including auto-generated `id`).\nSave the returned `id` into the `event_id` variable for subsequent requests."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/events — Create Fully Booked Event (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Full Capacity Photography Workshop\",\n  \"category\": \"Workshop\",\n  \"date\": \"2026-12-01\",\n  \"time\": \"03:00 PM\",\n  \"venue\": \"Media Lab, Block A\",\n  \"organizer\": \"Photography Club\",\n  \"capacity\": 30,\n  \"registeredCount\": 30,\n  \"description\": \"Hands-on DSLR and mobile photography basics for campus students.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events"]
+            },
+            "description": "Creates an event where registeredCount equals capacity (fully booked at creation).\n\nExpected: 201 Created — this is valid since registeredCount == capacity (not exceeding it).\nThis event will return 409 Conflict when /register is called."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/events — Missing Required Fields (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"\",\n  \"category\": \"Technical\",\n  \"date\": \"2026-11-20\",\n  \"time\": \"11:00 AM\",\n  \"venue\": \"\",\n  \"organizer\": \"Robotics Society\",\n  \"capacity\": 80,\n  \"registeredCount\": 25,\n  \"description\": \"Some description\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events"]
+            },
+            "description": "Sends blank title and venue — fails Jakarta Bean Validation.\n\nExpected: 400 Bad Request with `validationErrors` map showing which fields failed and why."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/events — Capacity Zero (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Zero Capacity Event\",\n  \"category\": \"Technical\",\n  \"date\": \"2026-11-25\",\n  \"time\": \"10:00 AM\",\n  \"venue\": \"Lab 1\",\n  \"organizer\": \"Tech Club\",\n  \"capacity\": 0,\n  \"registeredCount\": 0,\n  \"description\": \"Capacity cannot be zero or negative.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events"]
+            },
+            "description": "Sends capacity = 0 — violates @Min(1) constraint.\n\nExpected: 400 Bad Request with validationErrors.capacity = 'Capacity must be greater than zero'."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/events — registeredCount Exceeds Capacity (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Overflow Registration Event\",\n  \"category\": \"Technical\",\n  \"date\": \"2026-11-25\",\n  \"time\": \"10:00 AM\",\n  \"venue\": \"Lab 1\",\n  \"organizer\": \"Tech Club\",\n  \"capacity\": 50,\n  \"registeredCount\": 65,\n  \"description\": \"This should fail because 65 > 50.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events"]
+            },
+            "description": "Sends registeredCount (65) > capacity (50) — service-level validation.\n\nExpected: 400 Bad Request with message: 'Registered count (65) cannot exceed total capacity (50)'."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/events — Missing Body (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events"]
+            },
+            "description": "Sends empty JSON object — all @NotBlank / @NotNull constraints fire.\n\nExpected: 400 Bad Request with validationErrors listing all 9 required fields."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. PUT — Full Update",
+      "item": [
+        {
+          "name": "PUT /api/events/{id} — Full Update (200 OK)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"National Campus Hackathon 2026 — Extended Edition\",\n  \"category\": \"Hackathon\",\n  \"date\": \"2026-10-16\",\n  \"time\": \"09:30 AM\",\n  \"venue\": \"Innovation & Tech Lab, Block C & D\",\n  \"organizer\": \"ACM Student Chapter & GDSC\",\n  \"capacity\": 150,\n  \"registeredCount\": 110,\n  \"description\": \"Extended 48-hour hackathon focused on full-stack web applications, AI automation, and cloud microservices. Open to all branches.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}"]
+            },
+            "description": "Fully replaces all fields of an existing event. Every field must be provided.\n\nExpected: 200 OK with the completely updated event object."
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /api/events/9999 — Update Non-existent Event (404 Not Found)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Ghost Event\",\n  \"category\": \"General\",\n  \"date\": \"2026-12-01\",\n  \"time\": \"10:00 AM\",\n  \"venue\": \"Nowhere Hall\",\n  \"organizer\": \"No One\",\n  \"capacity\": 100,\n  \"registeredCount\": 0,\n  \"description\": \"This event does not exist.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events/9999",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "9999"]
+            },
+            "description": "Tries to update an event ID that doesn't exist.\n\nExpected: 404 Not Found — 'Event with ID 9999 not found'."
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /api/events/{id} — registeredCount Exceeds Capacity (400 Bad Request)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Bad Update Event\",\n  \"category\": \"Technical\",\n  \"date\": \"2026-11-30\",\n  \"time\": \"09:00 AM\",\n  \"venue\": \"Lab 2\",\n  \"organizer\": \"Dev Club\",\n  \"capacity\": 40,\n  \"registeredCount\": 55,\n  \"description\": \"registeredCount exceeds capacity — should be rejected.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}"]
+            },
+            "description": "Full update with registeredCount (55) > capacity (40).\n\nExpected: 400 Bad Request — service validates capacity rules on PUT as well."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. PATCH — Partial Update",
+      "item": [
+        {
+          "name": "PATCH /api/events/{id} — Update Category & Date (200 OK)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"Mega Hackathon\",\n  \"date\": \"2026-10-17\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}"]
+            },
+            "description": "Partially updates only the `category` and `date` fields. All other fields remain unchanged.\n\nExpected: 200 OK with updated category and date in the response."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /api/events/{id} — Update Capacity & registeredCount (200 OK)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"capacity\": 200,\n  \"registeredCount\": 115\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}"]
+            },
+            "description": "Partially updates capacity and registeredCount. Cross-field validation still applies.\n\nExpected: 200 OK with the new capacity (200) and registeredCount (115)."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /api/events/{id} — All 4 Patchable Fields (200 OK)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"Grand Hackathon\",\n  \"date\": \"2026-10-18\",\n  \"capacity\": 250,\n  \"registeredCount\": 130\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}"]
+            },
+            "description": "Updates all four patchable fields simultaneously: category, date, capacity, and registeredCount.\n\nExpected: 200 OK."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /api/events/{id} — Blank Category (400 Bad Request)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"   \"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}"]
+            },
+            "description": "Tries to patch category with a whitespace-only string.\n\nExpected: 400 Bad Request — 'Category cannot be blank when updating'."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /api/events/{id} — Capacity Below Registered (400 Bad Request)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"capacity\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}"]
+            },
+            "description": "Reduces capacity to 10 when registeredCount is already higher (e.g., 95 for the Hackathon).\n\nExpected: 400 Bad Request — 'Registered count (X) cannot exceed total capacity (10)'."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /api/events/9999 — Patch Non-existent Event (404 Not Found)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"Technical\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/events/9999",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "9999"]
+            },
+            "description": "Attempts a PATCH on an ID that does not exist.\n\nExpected: 404 Not Found."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. DELETE — Remove Event",
+      "item": [
+        {
+          "name": "DELETE /api/events/{id} — Delete Event (204 No Content)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}"]
+            },
+            "description": "Deletes the event with the specified ID.\n\nExpected: 204 No Content — no response body.\nAfter this, a GET on the same ID should return 404."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /api/events/9999 — Delete Non-existent Event (404 Not Found)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/events/9999",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "9999"]
+            },
+            "description": "Tries to delete an event that doesn't exist.\n\nExpected: 404 Not Found — safe idempotent behavior (explicit error rather than silent ignore)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. POST — Register Attendee",
+      "item": [
+        {
+          "name": "POST /api/events/{id}/register — Register (200 OK)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/events/{{event_id}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "{{event_id}}", "register"]
+            },
+            "description": "Increments `registeredCount` by 1 if the event has available capacity.\n\nExpected: 200 OK with the updated event showing registeredCount + 1.\nCall this multiple times to watch the count increase toward capacity."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/events/4/register — Full Event (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/events/4/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "4", "register"]
+            },
+            "description": "Event ID 4 is the Workshop (capacity 60, registeredCount 60 — full at startup).\n\nExpected: 409 Conflict with message:\n'Cannot register for event ... capacity is full (60/60 registered)'\n\nNote: If IDs shifted, first run GET /api/events to find the full Workshop event."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/events/9999/register — Register to Non-existent Event (404 Not Found)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/events/9999/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "events", "9999", "register"]
+            },
+            "description": "Tries to register for an event that doesn't exist.\n\nExpected: 404 Not Found — 'Event with ID 9999 not found'."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "8. H2 Console (Reference)",
+      "item": [
+        {
+          "name": "GET H2 Console — Open in Browser (not Postman)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/h2-console",
+              "host": ["{{base_url}}"],
+              "path": ["h2-console"]
+            },
+            "description": "Open this URL in a web browser (not Postman) to access the H2 web console.\n\nLogin credentials:\n  JDBC URL:  jdbc:h2:mem:campusconnect_db\n  Username:  sa\n  Password:  (leave empty)\n\nYou can run SQL queries like:\n  SELECT * FROM EVENTS;\n  SELECT COUNT(*) FROM EVENTS;"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
